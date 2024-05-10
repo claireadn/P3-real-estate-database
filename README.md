@@ -65,7 +65,7 @@ The database will be used to analyze the market and help the various regional ag
 * Modify the relational schema to take into account the new regional and population data. → Better visualize the various entities, associations and cardinalities in the database.
 * Presentation of the new standardized relational schema (following the 3NF standard) for the database. → Will result in the creation of new tables.
 
-**Mission 2: Modification of the database.
+**Mission 2: Modification of the database**
 
 * Implementation of tables in the database in accordance with the meeting report.
 * Use of SQLite. But it's possible to use MySQL or postgreSQL.
