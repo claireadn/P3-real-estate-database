@@ -135,3 +135,39 @@ SELECT
                 WHERE
                     v.date_mutation BETWEEN '2020-01-01' AND '2020-03-31') * 100),
             2) AS evol_ventes;
+
+# Query 8
+SELECT 
+    r.nom_reg,
+    ROUND(AVG(v.valeur_fonciere / b.surf_carrez),
+            2) AS prix_mcarrez
+FROM
+    region AS r
+        JOIN
+    departement AS d ON r.id_reg = d.id_reg
+        JOIN
+    commune AS c ON d.id_dep = c.id_dep
+        JOIN
+    bien AS b ON c.id_com = b.id_com
+        JOIN
+    vente AS v ON b.id_bien = v.id_bien
+WHERE
+    b.code_type_local LIKE 2
+        AND b.nb_pieces > 4
+GROUP BY r.nom_reg
+ORDER BY prix_mcarrez DESC;
+
+# Query 9
+SELECT 
+    c.nom_com, COUNT(b.id_bien) AS nb_ventes
+FROM
+    bien AS b
+        JOIN
+    vente AS v ON b.id_bien = v.id_bien
+        JOIN
+    commune AS c ON b.id_com = c.id_com
+WHERE
+    v.date_mutation BETWEEN '2020-01-01' AND '2020-03-31'
+GROUP BY c.nom_com
+HAVING nb_ventes >= 50
+ORDER BY nb_ventes DESC;
