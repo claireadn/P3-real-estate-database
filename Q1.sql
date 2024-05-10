@@ -60,3 +60,46 @@ GROUP BY d.nom_dep
 ORDER BY prix_mcarrez DESC
 LIMIT 10;
 ORDER BY proportion_ventes DESC;
+
+# Query 5
+SELECT 
+    r.nom_reg,
+    r.id_reg,
+    ROUND(AVG(v.valeur_fonciere / b.surf_carrez),
+            2) AS prix_mcarrez
+FROM
+    region AS r
+        JOIN
+    departement AS d ON r.id_reg = d.id_reg
+        JOIN
+    commune AS c ON d.id_dep = c.id_dep
+        JOIN
+    bien AS b ON c.id_com = b.id_com
+        JOIN
+    vente AS v ON b.id_bien = v.id_bien
+WHERE
+    d.id_reg LIKE 'R11'
+        AND code_type_local LIKE 1
+GROUP BY r.id_reg;
+
+# Query 6
+SELECT 
+    b.id_bien,
+    r.nom_reg,
+    c.nom_com,
+    b.surf_carrez,
+    v.valeur_fonciere
+FROM
+    bien AS b
+        JOIN
+    vente AS v ON b.id_bien = v.id_bien
+        JOIN
+    commune AS c ON b.id_com = c.id_com
+        JOIN
+    departement AS d ON c.id_dep = d.id_dep
+        JOIN
+    region AS r ON d.id_reg = r.id_reg
+WHERE
+    code_type_local LIKE 2
+ORDER BY valeur_fonciere DESC
+LIMIT 10;
